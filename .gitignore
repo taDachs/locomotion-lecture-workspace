@@ -1,0 +1,6 @@
+src/pal_packages
+build
+devel
+logs
+.catkin_tools
+.catkin_workspace
