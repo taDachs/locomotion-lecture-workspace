@@ -2,7 +2,6 @@
   "name": "Locomotion Development Container",
   "privileged": true,
   "remoteUser": "robot",
-  // "image": "osrf/ros:noetic-desktop-full",
   "build": { "dockerfile": "Dockerfile" },
   "features": {
     "ghcr.io/devcontainers/features/common-utils:1": {
@@ -11,16 +10,11 @@
       "username": "robot",
       "userUid": "1000",
       "userGid": "1000"
-    },
-    "ghcr.io/tadachs/devcontainer-features/cli-dev-utils:latest": {},
-    // "ghcr.io/tadachs/devcontainer-features/my-dotfiles:latest": {
-    //   "username": "max"
-    // }
+    }
   },
   "workspaceFolder": "/home/robot/ws",
   "workspaceMount": "source=${localWorkspaceFolder},target=/home/robot/ws,type=bind",
   "containerEnv": {
-    "DISPLAY": "unix:1",
     "LANG": "en_US.UTF-8",
     "LANGUAGE": "en_US:en",
     "LC_ALL": "en_US.UTF-8"
@@ -32,13 +26,7 @@
     "-e",
     "TERM=${env:TERM}",
     "-e",
-    "SHELL=${env:SHELL}",
-    "-v",
-    "${env:SSH_AUTH_SOCK}:/tmp/ssh-agent.socket",
-    "-e",
-    "SSH_AUTH_SOCK=/tmp/ssh-agent.socket",
-    "--runtime=nvidia",
-    "--gpus=all"
+    "SHELL=${env:SHELL}"
   ],
   "mounts": [
     {
@@ -46,21 +34,9 @@
       "target": "/tmp/.X11-unix",
       "type": "bind",
       "consistency": "cached"
-    },
-    {
-      "source": "/dev/dri",
-      "target": "/dev/dri",
-      "type": "bind",
-      "consistency": "cached"
     }
   ],
-  "onCreateCommand": {
-    "appimage-reqs": "sudo apt update && sudo apt install fuse wget stow"
-  },
   "postCreateCommand": {
-    "chown-ws": "sudo chown -R robot /home/robot/ws/",
-    "install-nvim-appimage-0.9.5": "mkdir -p $HOME/.local/bin && wget https://github.com/neovim/neovim/releases/download/v0.9.5/nvim.appimage && chmod +x nvim.appimage && mv nvim.appimage $HOME/.local/bin/nvim",
-    "install-tmux-appimage-3.3a": "mkdir -p $HOME/.local/bin && wget https://github.com/nelsonenzo/tmux-appimage/releases/download/3.3a/tmux.appimage && chmod +x tmux.appimage && mv tmux.appimage $HOME/.local/bin/tmux",
-    "shellrc-setup": "echo \"alias tmux='tmux -u'\" >> ~/.local_shellrc && echo 'source /home/robot/ws/devel/setup.zsh' >> ~/.local_shellrc"
+    "chown-ws": "sudo chown -R robot /home/robot/ws/"
   }
 }
