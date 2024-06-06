@@ -32,7 +32,7 @@ Inside the container run
 vcs import < reemc.repos
 ```
 
-Now source ROS by running `source /ros/noetic/setup.zsh` (the container uses zsh as a shell because
+Now source ROS by running `source /opt/ros/noetic/setup.zsh` (the container uses zsh as a shell because
 it's 2024). The build the workspace by running `catkin build`. Now you can source the freshly built
 workspace by running `source devel/setup.zsh`.
 
