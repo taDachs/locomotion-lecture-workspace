@@ -59,5 +59,29 @@ rosrun facepalm facepalm.py
 
 - no gui
     - did you run `xhost +` on your host system?
+- still no gui
+    - first, install `x11-apps` and `mesa-utils` in the container
+    ```bash
+    sudo apt update
+    sudo apt install x11-apps mesa-utils
+    ```
+    - run `xeyes` to verify that x-socket forwarding is working. You should see a window open with
+      two eyes following your cursor
+        - if it says something like `cant open display :1`, check the `/tmp/.X11-unix` folder using
+          `ls /tmp/.X11-unix` and try out every display socket listed there. For example `ls` would
+          show something like `X0 X1 X2 X3`. Test each socket by running `DISPLAY=:N xeyes`, where
+          `N` is the number of a socket, so for X1 you would write something like `DISPLAY=:1
+          xeyes`.
+          If you found a working socket, from now one write `export DISPLAY=:N` in every new shell
+          session in the container.
+    - run `glxgears` to verify that hardware acceleration is working. You should see a window open
+      with a bunch of gears turning. If you don't, or only see a black window, your hardware
+      acceleration is broken and stuff like rviz or gazebo won't work
+        - if you have a Nvidia GPU and some sort of non-default driver setup (e.g. everything that
+          has to do with cuda), make sure to install and setup the [`nvidia-container-toolkit`](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
+- build crashes
+    - if you are using docker desktop, try increasing the RAM assigned to your docker
+    - build with fewer cores using the `-j` flag for catkin, e.g. `catkin build -j 4`
+
 - something with ros didn't work
     - did you source the workspace?
