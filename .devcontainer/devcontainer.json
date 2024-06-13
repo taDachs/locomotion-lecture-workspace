@@ -22,11 +22,7 @@
   "runArgs": [
     "--net=host",
     "-e",
-    "DISPLAY=${env:DISPLAY}",
-    "-e",
-    "TERM=${env:TERM}",
-    "-e",
-    "SHELL=${env:SHELL}"
+    "DISPLAY=${env:DISPLAY}"
   ],
   "mounts": [
     {
